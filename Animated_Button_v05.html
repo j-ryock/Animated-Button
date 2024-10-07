@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confetti Button</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+    <style>
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .button {
+            position: relative;
+            width: 200px;
+            font-family: Arial;
+            font-size: 24pt;
+            font-weight: bold;
+            color: #fff;
+            border: none;
+            padding: 20px;
+            margin: 50px;
+            background-color: #012169;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: transform ease-in 0.1s;
+        }
+
+        /* X symbol style */
+        .button .x-symbol {
+            display: none;
+            position: absolute;
+            right: -40px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 32pt;
+            color: red;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        /* Animation to show the X */
+        .button.show-x .x-symbol {
+            display: inline;
+            opacity: 1;
+            animation: fadeInX 0.5s forwards;
+        }
+
+        /* Keyframes for the fade-in effect */
+        @keyframes fadeInX {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="button-container">
+        <button class="button" id="submitButton" onclick="checkAnswer()">Submit
+            <span class="x-symbol">X</span>
+        </button>
+    </div>
+    <script>
+        let correct = true;  // Change this to "correct" or "incorrect"
+
+        // Function to check if the answer is correct and take action
+        function checkAnswer() {
+            const button = document.querySelector('#submitButton');
+
+            if (correct === true) {
+                button.innerText = 'Correct!';
+                button.style.backgroundColor = 'green';
+                // Trigger confetti if correct
+                confetti({
+                    particleCount: 100,
+                    spread: 60,
+                    origin: { y: 0.6 }
+                });
+            } else {
+                button.innerText = 'Inorrect!';
+                button.style.backgroundColor = 'red';
+            }
+        }
+    </script>
+</body>
+
+</html>
