@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confetti Button</title>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script> -->
+    <script src="js/confetti.browser.min.js"></script>
+    <style>
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 20vh;
+        }
+
+        .button {
+            position: relative;
+            font-family: Arial;
+            font-size: 24pt;
+            font-weight: bold;
+            color: #fff;
+            border: none;
+            padding: 20px 50px;
+            background-color: #012169;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: transform ease-in 0.1s;
+        }
+    </style>
+</head>
+
+<body>
+    <fieldset>
+        <legend>Set correct Variable</legend>
+
+        <label for="option-true">
+            <input type="radio" id="option-true" name="question-01" value="true"
+                onClick="setCorrectTrue(); resetButton();">
+            True
+        </label><br>
+
+        <label for="option-false">
+            <input type="radio" id="option-false" name="question-01" value="false"
+                onClick="setCorrectFalse(); resetButton();">
+            False
+        </label><br>
+
+    </fieldset>
+
+    <div class="button-container">
+        <button class="button" id="submitButton" onclick="checkAnswer()">Submit
+        </button>
+        <br>
+    </div>
+    
+    <a href="https://www.npmjs.com/package/canvas-confetti" target="_blank">Canvas-confetti NPM</a>
+    <script>
+
+        let correct;
+
+        function setCorrectTrue() {
+            correct = true;
+        }
+
+        function setCorrectFalse() {
+            correct = false;
+        }
+
+        function resetButton() {
+            const button = document.querySelector('#submitButton');
+            button.innerText = 'Submit';
+            button.style.backgroundColor = ''; // Clear inline styles to revert to default CSS
+            button.style.cursor = ''; // Clear inline styles to revert to default CSS
+        }
+
+        function checkAnswer() {
+            const button = document.querySelector('#submitButton');
+
+            if (correct === true) {
+                button.innerText = 'Correct!';
+                button.style.backgroundColor = 'green';
+                button.style.cursor = 'default';
+                confetti({
+                    particleCount: 100,
+                    spread: 60,
+                    // origin: { y: 0.6 } // Relative to the triggering element (e.g., the submit button)
+                    origin: { x: 0.5, y: 0.6 } // Almost middle of the viewport
+                });
+            } else if (correct === false) {
+                button.innerText = 'Inorrect!';
+                button.style.backgroundColor = 'red';
+                button.style.cursor = 'default';
+            } else {
+                button.innerText = 'You must choose an answer!';
+                button.style.backgroundColor = 'orange';
+                button.style.cursor = 'default';
+            }
+        }
+    </script>
+</body>
+
+</html>
